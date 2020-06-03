@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:qrreaderapp/src/model/scan_model.dart';
+export 'package:qrreaderapp/src/model/scan_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
@@ -104,7 +105,7 @@ class DBProvider{
   Future<int> deleteScan (int id) async {
     final db = await database;
 
-    final res = await db.delete('Scans', where: 'id= ', whereArgs: [id]);
+    final res = await db.delete('Scans', where: 'id = ?', whereArgs: [id]);
 
     return res;
   }
