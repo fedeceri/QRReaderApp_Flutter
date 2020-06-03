@@ -3,6 +3,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:qrreaderapp/src/model/scan_model.dart';
 
 class MapaPage extends StatelessWidget {
+  final map = new MapController();
+
   @override
   Widget build(BuildContext context) {
     final ScanModel scan = ModalRoute.of(context).settings.arguments;
@@ -11,7 +13,12 @@ class MapaPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Coordenadas QR'),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.my_location), onPressed: null)
+          IconButton(
+            icon: Icon(Icons.my_location), 
+            onPressed: (){
+              map.move(scan.getLatLng(), 15);
+            }
+            )
         ],
       ),
       body: _crearFlutterMap(scan)
@@ -20,6 +27,7 @@ class MapaPage extends StatelessWidget {
 
   Widget _crearFlutterMap(ScanModel scan){
     return FlutterMap(
+      mapController: map,
       options: MapOptions(
         center: scan.getLatLng(),
         zoom: 10
@@ -43,7 +51,16 @@ class MapaPage extends StatelessWidget {
 
   _crearMarcadores(ScanModel scan){
     return MarkerLayerOptions(
-      markers: <Marke>
+      markers: <Marker> [
+        Marker(
+          width: 100.0,
+          height: 100.0,
+          point: scan.getLatLng(),
+          builder: (context) => Container(
+            child: Icon(Icons.location_on, size: 45.0, color: Theme.of(context).primaryColor,),
+          )
+        ),
+      ]
       );
   }
 }
