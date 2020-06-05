@@ -1,8 +1,12 @@
+import 'dart:io';
+
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/material.dart';
 import 'package:qrreaderapp/src/bloc/scans_bloc.dart';
 import 'package:qrreaderapp/src/model/scan_model.dart';
 import 'package:qrreaderapp/src/pages/direcciones_page.dart';
 import 'package:qrreaderapp/src/pages/mapas_page.dart';
+import 'package:qrreaderapp/src/utils/utils.dart' as utils;
 
  
 class HomePage extends StatefulWidget {
@@ -47,19 +51,27 @@ class _HomePageState extends State<HomePage> {
 
     //dynamic futureString = '';
 
-    String futureString = 'https://www.frc.utn.edu.ar';
+    dynamic futureString;
   
-/*     try{
-      futureString = await BarcodeScanner.scan();
+    try{
+      futureString = await BarcodeScanner.scan(); 
     }catch(e){
       futureString = e.toString();
     }
 
     print('FutureString: ${futureString.rawContent}');
- */
+
     if(futureString != null){
-      final scan = ScanModel(valor: futureString);
+      final scan = ScanModel(valor: futureString.rawContent);
       scansBloc.agregarScan(scan);
+
+      if ( Platform.isIOS ) {
+        Future.delayed( Duration( milliseconds: 750 ), () {
+          utils.abrirScan(context, scan);    
+        });
+      } else {
+        utils.abrirScan(context, scan);
+      }
       
       // final scan2 = ScanModel(valor: 'geo:40.79080836648317,-73.95924940546878');
       // scansBloc.agregarScan(scan2); 

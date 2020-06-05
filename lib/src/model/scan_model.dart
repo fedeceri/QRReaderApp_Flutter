@@ -31,10 +31,16 @@ class ScanModel {
     };
 
     LatLng getLatLng(){
-      final lalo = valor.substring(4).split(',');
-      final lat = double.parse(lalo[0]);
-      final lng = double.parse(lalo[1]);
+      if(valor.length > 0 || valor.isNotEmpty){
+        final lalo = valor.substring(4).split(',');
+        final lat = double.parse(lalo[0]);
+        final lng = double.parse(lalo[1]);
+        return LatLng(lat, lng);
+      }else{
+        return null;
+      }
+      
 
-      return LatLng(lat, lng);
+      
     }
 }
