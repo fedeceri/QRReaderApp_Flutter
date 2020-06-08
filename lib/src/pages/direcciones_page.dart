@@ -8,6 +8,8 @@ class DireccionesPage extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
+    scansBloc.obtenerScans();
+    
     return StreamBuilder<List<ScanModel>>(
       stream: scansBloc.scansStreamHttp,
       builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {

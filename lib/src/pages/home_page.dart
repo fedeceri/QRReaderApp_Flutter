@@ -57,9 +57,11 @@ class _HomePageState extends State<HomePage> {
       futureString = await BarcodeScanner.scan(); 
     }catch(e){
       futureString = e.toString();
+      
     }
 
     print('FutureString: ${futureString.rawContent}');
+    print('barcode_scan ----: ${futureString.type}');
 
     if(futureString != null){
       final scan = ScanModel(valor: futureString.rawContent);
